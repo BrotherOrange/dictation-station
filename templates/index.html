@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="听写小站">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>听写小站</title>
+    <script type="text/javascript" src="static/scripts/fileinput.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </head>
+  <body style="background-image: url('static/image.jpg'); background-size: cover; background-position: center;">
+    <div class="container">
+        <div>
+            <h1 style="font-family:HeiTi; text-align:center;font-weight: bold; padding: 20px;">超能“听”</h1>
+            <p style="font-family:KaiTi; font-size: 20px;">
+                这是一个通过<a href="https://docs.microsoft.com/azure/cognitive-services/">Azure认知服务</a>搭建的平台，集成了语音转文字，语音翻译，关键词提取和听写批改功能。<b>大家不妨也来试试！</b>
+            </p>
+        </div>
+        <div class="row">
+            <div class="col">
+            </br>
+                <form action="" enctype="multipart/form-data" method="POST">
+                    <input type="file" id="fileInput" accept=".mp3, .wav, .wma, .ape, .mmf, .aac" name="file" onchange="FileInput(this)" class="btn btn-info mb-1" style="left: 50%;">
+                    <input type="submit" value="上传" class="btn btn-success mb-1">
+                </form>
+            </div>
+        <!-- Select output language here. -->
+        <div class="col">
+            <div class="form-group">
+                <label for="select-language"><strong>请选择语音文件所使用的语言</strong></label>
+                <select class="form-control" id="select-language">
+                    <option value="auto">自动识别体验（仅适用于英语、德语、法语和西班牙语）</option>
+                    <option value="ar-BH">阿拉伯语</option>                
+                    <option value="ca-ES">加泰罗尼亚语</option>
+                    <option value="en-US">英语</option>
+                    <option value="fr-FR">法语</option>
+                    <option value="de-DE">德语</option>
+                    <option value="hi-IN">印地语</option>
+                    <option value="it-IT">意大利语</option>
+                    <option value="ja-JP">日语</option>
+                    <option value="ko-KR">韩语</option>
+                    <option value="pt-BR">葡萄牙语</option>
+                    <option value="ru-RU">俄语</option>
+                    <option value="es-ES">西班牙语</option>
+                    <option value="th-TH">泰语</option>
+                    <option value="da-DK">丹麦语</option>
+                    <option value="fi-FI">芬兰语</option>
+                    <option value="sv-SE">瑞典语</option>
+                    <option value="nl-NL">荷兰语</option>
+                    <option value="pl-PL">波兰语</option>
+                </select>
+            </div>
+        </div>
+    </div>
+        <div>
+            <button type="submit" class="btn btn-primary mb-2" id="dictate" onclick="recognize(this)">原文听写</button>
+            <button type="submit" class="btn btn-primary mb-2" id="translate" onclick="translation(this)">显示检测到的原文语种（自动识别模式下）以及中文翻译</button>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col">
+                <textarea readonly class="form-control" id="text-of-voice" rows="12"></textarea>
+            </div>
+            <div class="col">
+                <textarea readonly class="form-control" id="translation-of-voice" rows="12"></textarea>
+            </div>
+        </div>
+        </br>
+        <div id="detected-language" style="display: none">
+            <strong>检测到的语种：</strong> <span id="detected-language-result"></span>
+        </div>
+        </br>
+        <div>
+            <button type="submit" class="btn btn-primary mb-2" id="keyphrases" onclick="keyword(this)">提取关键词</button>
+            &nbsp;&nbsp;<b>注意：</b>该功能不适用于<b style="font-family:KaiTi;">阿拉伯语</b>，<b style="font-family:KaiTi;">加泰罗尼亚语</b>，<b style="font-family:KaiTi;">印地语</b>和<b style="font-family:KaiTi;">泰语！</b>
+        </div>
+        <div id="keywords" style="display: none">
+            <strong>原文关键词：</strong> <span id="original-keywords"></span>
+        </div>
+    </div>
+  </body>
+</html>
